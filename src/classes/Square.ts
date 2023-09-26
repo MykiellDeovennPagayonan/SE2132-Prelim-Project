@@ -27,8 +27,8 @@ class Square implements Shape {
     this.size = size;
     this.color = color;
   }
-  clone(): Circle {
-    return new Circle(this.x, this.y, this.dx, this.dy, this.size, this.color);
+  clone(): Square {
+    return new Square(this.x, this.y, this.dx, this.dy, this.size, this.color);
   }
 
   draw(ctx: CanvasRenderingContext2D) {

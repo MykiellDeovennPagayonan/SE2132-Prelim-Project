@@ -9,7 +9,7 @@ class Square {
         this.color = color;
     }
     clone() {
-        return new Circle(this.x, this.y, this.dx, this.dy, this.size, this.color);
+        return new Square(this.x, this.y, this.dx, this.dy, this.size, this.color);
     }
     draw(ctx) {
         ctx.beginPath();
