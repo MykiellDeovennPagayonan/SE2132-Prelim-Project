@@ -28,7 +28,7 @@ if (canvas) {
   if (ctx) {
     // logic start here
 
-    let object = new Circle(200, 200, -2, 2, 20, "blue");
+    let object = new Octagon(200, 200, -2, 2, 20, "blue");
 
     function animate(ctx: CanvasRenderingContext2D) {
       requestAnimationFrame(() => animate(ctx));

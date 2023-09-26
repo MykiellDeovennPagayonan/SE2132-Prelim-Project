@@ -21,13 +21,16 @@ if (canvas) {
     let ctx = canvas.getContext("2d");
     if (ctx) {
         // logic start here
-        let object = new Circle(200, 200, -2, 2, 20, "blue");
+        let object = new Octagon(200, 200, -2, 2, 20, "blue");
         function animate(ctx) {
             requestAnimationFrame(() => animate(ctx));
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            console.log(object);
             if (canvas) {
+                // start of animation logic here
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 object.update(ctx, mouse, canvas);
+            }
+            else {
+                console.log("Canvas element not found in animation");
             }
         }
         animate(ctx);

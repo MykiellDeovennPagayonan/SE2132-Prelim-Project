@@ -1,5 +1,5 @@
 "use strict";
-class Circle {
+class Circle extends Shape {
     constructor(x, y, dx, dy, radius, color) {
         this.x = x;
         this.y = y;

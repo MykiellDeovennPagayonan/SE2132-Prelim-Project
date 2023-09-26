@@ -4,7 +4,7 @@ interface Mouse {
   click: boolean;
 }
 
-class Circle {
+class Circle extends Shape {
   x: number;
   y: number;
   dx: number;
