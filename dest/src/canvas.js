@@ -23,20 +23,6 @@ if (canvas) {
         // logic start here
         const shapeFactory = new ShapeFactory();
         // Pool Objects
-        const circlePool = new ObjectPool(10, Circle);
-        const circles = [];
-        function addRandomCircle() {
-            const circle = circlePool.getObject();
-            if (circle) {
-                circle.x = Math.random() * canvas.width;
-                circle.y = Math.random() * canvas.height;
-                circle.dx = Math.random() * 4 - 2;
-                circle.dy = Math.random() * 4 - 2;
-                circle.size = 30;
-                circle.color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
-                circles.push(circle);
-            }
-        }
         const addCircleButton = document.querySelector("#addCircleButton");
         if (addCircleButton) {
             addCircleButton.addEventListener("click", addRandomCircle);

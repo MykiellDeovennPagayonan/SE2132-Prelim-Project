@@ -32,11 +32,12 @@ if (canvas) {
     // Pool Objects
     const circlePool = new ObjectPool<Circle>(10, Circle);
     const circles: Circle[] = [];
-    for (let i = 0; i < 5; i++) {
+
+    function addRandomCircle() {
       const circle = circlePool.getObject();
       if (circle) {
-        circle.x = Math.random() * canvas.width;
-        circle.y = Math.random() * canvas.height;
+        circle.x = Math.random() * canvas!.width;
+        circle.y = Math.random() * canvas!.height;
         circle.dx = Math.random() * 4 - 2;
         circle.dy = Math.random() * 4 - 2;
         circle.size = 30;
@@ -45,6 +46,12 @@ if (canvas) {
         })`;
         circles.push(circle);
       }
+    }
+
+    const addCircleButton = document.querySelector("#addCircleButton");
+
+    if (addCircleButton) {
+      addCircleButton.addEventListener("click", addRandomCircle);
     }
 
     const square = shapeFactory.createSquare(100, 100, 2, -2, 30, "green");
@@ -61,6 +68,25 @@ if (canvas) {
 
         circles.forEach((circle) => {
           if (circle) {
+            circle.x += circle.dx;
+            circle.y += circle.dy;
+
+            if (circle.x + circle.size > canvas!.width) {
+              circle.x = canvas!.width - circle.size;
+              circle.dx = -circle.dx;
+            } else if (circle.x - circle.size < 0) {
+              circle.x = circle.size;
+              circle.dx = -circle.dx;
+            }
+
+            if (circle.y + circle.size > canvas!.height) {
+              circle.y = canvas!.height - circle.size;
+              circle.dy = -circle.dy;
+            } else if (circle.y - circle.size < 0) {
+              circle.y = circle.size;
+              circle.dy = -circle.dy;
+            }
+
             circle.update(ctx, mouse, canvas!);
           }
         });
