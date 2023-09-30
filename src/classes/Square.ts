@@ -43,10 +43,10 @@ class Square implements Shape {
     mouse: Mouse,
     canvas: HTMLCanvasElement
   ) {
-    if (this.x > canvas.width - this.size || this.x < 0 + this.size) {
+    if (this.x > canvas.width - this.size || this.x < 0) {
       this.dx = -this.dx;
     }
-    if (this.y > canvas.height - this.size || this.y < 0 + this.size) {
+    if (this.y > canvas.height - this.size || this.y < 0) {
       this.dy = -this.dy;
     }
     this.x += this.dx;

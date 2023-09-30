@@ -29,11 +29,27 @@ if (canvas) {
     // logic start here
 
     const shapeFactory = new ShapeFactory();
+    // Pool Objects
+    const circlePool = new ObjectPool<Circle>(10, Circle);
+    const circles: Circle[] = [];
+    for (let i = 0; i < 5; i++) {
+      const circle = circlePool.getObject();
+      if (circle) {
+        circle.x = Math.random() * canvas.width;
+        circle.y = Math.random() * canvas.height;
+        circle.dx = Math.random() * 4 - 2;
+        circle.dy = Math.random() * 4 - 2;
+        circle.size = 30;
+        circle.color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${
+          Math.random() * 256
+        })`;
+        circles.push(circle);
+      }
+    }
 
-    const circle = shapeFactory.createCircle(50, 50, 2, 2, 30, "blue");
-    const clonedCircle = circle.clone();
     const square = shapeFactory.createSquare(100, 100, 2, -2, 30, "green");
     const cloneSquare = square.clone();
+
     // const octagon = shapeFactory.createOctagon(100, 50, 2, 2, 30, "red");
 
     function animate(ctx: CanvasRenderingContext2D) {
@@ -43,9 +59,14 @@ if (canvas) {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height); // removes prev frame
 
-        clonedCircle.update(ctx, mouse, canvas);
+        circles.forEach((circle) => {
+          if (circle) {
+            circle.update(ctx, mouse, canvas!);
+          }
+        });
+
         cloneSquare.update(ctx, mouse, canvas);
-        // octagon.update(ctx, mouse, canvas);
+        // octagon.update(ctx, mouse, canvas); // dont include this yet, its very buggy
       } else {
         console.log("Canvas element not found in animation");
       }

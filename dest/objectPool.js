@@ -9,7 +9,7 @@ class ObjectPool {
     }
     getObject() {
         if (this.availableObjects.length > 0) {
-            return this.availableObjects.pop();
+            return this.availableObjects.pop() || null;
         }
         else {
             return null;
