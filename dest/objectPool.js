@@ -1,11 +1,17 @@
 "use strict";
 class ObjectPool {
-    constructor(size, ObjectClass) {
+    constructor(size) {
         this.objects = [];
-        for (let i = 0; i < size; i++) {
-            this.objects.push(new ObjectClass(0, 0));
+        this.size = size;
+        this.availableObjects = [];
+    }
+    addObject(object) {
+        if (this.objects.length < this.size) {
+            this.objects.push(object);
         }
-        this.availableObjects = [...this.objects];
+        else {
+            console.log("size full");
+        }
     }
     getObject() {
         if (this.availableObjects.length > 0) {
@@ -16,7 +22,11 @@ class ObjectPool {
         }
     }
     returnObject(object) {
-        if (object && this.objects.includes(object)) {
+        if (this.objects.includes(object)) {
+            const index = this.objects.indexOf(object);
+            if (index !== -1) {
+                this.objects.splice(index, 1);
+            }
             this.availableObjects.push(object);
         }
     }

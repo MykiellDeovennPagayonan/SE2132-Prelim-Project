@@ -4,7 +4,7 @@ interface Mouse {
   click: boolean;
 }
 
-class Square {
+class Square implements Shape {
   x: number;
   y: number;
   dx: number;
@@ -31,15 +31,41 @@ class Square {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    ctx.fillRect(100, 0, 80, 20);
+    ctx.fillRect(this.x, this.y, this.size * 2, this.size * 2);
     ctx.stroke();
     ctx.fill();
   }
 
-  update(ctx: CanvasRenderingContext2D, mouse: Mouse) {
+  update(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement
+  ) {
+    if (this.x > (canvas.width - (this.size * 2)) || this.x < 0) {
+      this.dx = -this.dx
+    }
+    if (this.y > (canvas.height - (this.size * 2)) || this.y < 0) {
+      this.dy = -this.dy
+    }
+
     this.x += this.dx;
     this.y += this.dy;
 
+    if (mouse.x && mouse.y) {
+      if (mouse.x > this.x && mouse.x < this.x + this.size*2 && mouse.y > this.y && mouse.y < this.y + this.size*2) {
+        console.log("HI")
+      }
+    }
+
     this.draw(ctx);
+  }
+
+  clone(mouse: Mouse) {
+    if (mouse.x && mouse.y) {
+      if (mouse.x > this.x && mouse.x < this.x + this.size*2 && mouse.y > this.y && mouse.y < this.y + this.size*2) {
+        const clone = new Square(this.x, this.y, -this.dx, -this.dy, this.size, this.color)
+        return clone
+      }
+    }
+    return null
   }
 }

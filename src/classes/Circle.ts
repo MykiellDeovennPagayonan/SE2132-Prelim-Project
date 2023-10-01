@@ -4,12 +4,12 @@ interface Mouse {
   click: boolean;
 }
 
-class Circle extends Shape {
+class Circle implements Shape {
   x: number;
   y: number;
   dx: number;
   dy: number;
-  radius: number;
+  size: number;
   color: string;
 
   constructor(
@@ -17,31 +17,34 @@ class Circle extends Shape {
     y: number,
     dx: number,
     dy: number,
-    radius: number,
+    size: number,
     color: string
   ) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = radius;
+    this.size = size;
     this.color = color;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.strokeStyle = this.color;
     ctx.fillStyle = this.color;
     ctx.stroke();
     ctx.fill();
   }
 
-  update(ctx: CanvasRenderingContext2D, mouse: Mouse, canvas : HTMLCanvasElement) {
-    if (this.x > (canvas.width - (this.radius)) || this.x < (0 + (this.radius))) {
+  update(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement
+  ) {
+    if (this.x > (canvas.width - (this.size)) || this.x < (0 + (this.size))) {
       this.dx = -this.dx
     }
-    if (this.y > (canvas.height - (this.radius)) || this.y < (0 + (this.radius))) {
+    if (this.y > (canvas.height - (this.size)) || this.y < (0 + (this.size))) {
       this.dy = -this.dy
     }
 
@@ -49,5 +52,15 @@ class Circle extends Shape {
     this.y += this.dy;
 
     this.draw(ctx);
+  }
+
+  clone(mouse: Mouse) {
+    if (mouse.x && mouse.y) {
+      if (mouse.x > this.x - this.size && mouse.x < this.x + this.size && mouse.y > this.y - this.size && mouse.y < this.y + this.size) {
+        const clone = new Circle(this.x, this.y, -this.dx, -this.dy, this.size, this.color)
+        return clone
+      }
+    }
+    return null
   }
 }

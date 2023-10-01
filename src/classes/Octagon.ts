@@ -4,12 +4,12 @@ interface Mouse {
   click: boolean;
 }
 
-class Octagon {
+class Octagon implements Shape {
   x: number;
   y: number;
   dx: number;
   dy: number;
-  radius: number;
+  size: number;
   color: string;
 
   constructor(
@@ -17,47 +17,59 @@ class Octagon {
     y: number,
     dx: number,
     dy: number,
-    radius: number,
+    size: number,
     color: string
   ) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = radius;
+    this.size = size;
     this.color = color;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.radius, this.radius);
-    ctx.stroke();
+    ctx.moveTo(this.x + this.size * Math.cos(0), this.y + this.size * Math.sin(0));
+  
+    for (let i = 1; i <= 8; i++) {
+      const angle = (i * 2 * Math.PI) / 8;
+      const cornerX = this.x + this.size * Math.cos(angle);
+      const cornerY = this.y + this.size * Math.sin(angle);
+      ctx.lineTo(cornerX, cornerY);
+    }
+  
+    ctx.closePath();
     ctx.fill();
-
-    ctx.beginPath();
-    ctx.rotate((45 * Math.PI) / 180);
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.radius, this.radius);
     ctx.stroke();
-    ctx.fill();
+    ctx.translate(0, 0)
   }
 
   update(
     ctx: CanvasRenderingContext2D,
-    mouse: Mouse,
     canvas: HTMLCanvasElement
   ) {
-    if (this.x > canvas.width - this.radius || this.x < 0) {
-      this.dx = -this.dx;
+    if (this.x > (canvas.width - (this.size)) || this.x < (0 + (this.size))) {
+      this.dx = -this.dx
     }
-    if (this.y > canvas.height - this.radius || this.y < 0) {
-      this.dy = -this.dy;
+    if (this.y > (canvas.height - (this.size)) || this.y < (0 + (this.size))) {
+      this.dy = -this.dy
     }
 
     this.x += this.dx;
     this.y += this.dy;
 
     this.draw(ctx);
+  }
+
+  clone(mouse: Mouse) {
+    if (mouse.x && mouse.y) {
+      if (mouse.x > this.x - this.size && mouse.x < this.x + this.size && mouse.y > this.y - this.size && mouse.y < this.y + this.size) {
+        const clone = new Octagon(this.x, this.y, -this.dx, -this.dy, this.size, this.color)
+        return clone
+      }
+    }
+    return null
   }
 }

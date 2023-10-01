@@ -1,26 +1,39 @@
 class ObjectPool {
-  objects : Array<Object>
-  availableObjects : Array<Object>
+  size: number;
+  objects: Array<Square | Octagon | Circle>;
+  availableObjects: Array<Square | Octagon | Circle>;
 
-  constructor(size : number, ObjectClass : any) {
-      this.objects = [];
-      for (let i = 0; i < size; i++) {
-          this.objects.push(new ObjectClass(0, 0));
-      }
-      this.availableObjects = [...this.objects]
+  constructor(size: number) {
+    this.objects = [];
+    this.size = size;
+    this.availableObjects = [];
+  }
+
+  addObject(object: Square | Octagon | Circle) {
+    if (this.objects.length < this.size) {
+      this.objects.push(object)
+    } else {
+      console.log("size full")
+    }
   }
 
   getObject() {
-      if (this.availableObjects.length > 0) {
-          return this.availableObjects.pop();
-      } else {
-          return null;
-      }
+    if (this.availableObjects.length > 0) {
+      return this.availableObjects.pop();
+    } else {
+      return null;
+    }
   }
 
-  returnObject(object : Object) {
-      if (object && this.objects.includes(object)) {
-          this.availableObjects.push(object);
+  returnObject(object: Square | Octagon | Circle) {
+    if (this.objects.includes(object)) {
+      const index = this.objects.indexOf(object);
+  
+      if (index !== -1) {
+        this.objects.splice(index, 1);
       }
+      
+      this.availableObjects.push(object);
+    }
   }
 }
