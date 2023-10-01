@@ -3,6 +3,28 @@ body {
   overflow: hidden;
 }
 
+.page-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+
+#addCircleButton {
+  margin-top: 1rem;
+  position: absolute;
+  z-index: 1;
+  background: transparent;
+  border: 1px solid rgb(33, 38, 38);
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#addCircleButton:active {
+  background-color: beige;
+}
+
 .canvas {
   background-color: aqua;
+  position: absolute;
 }

@@ -1,8 +1,8 @@
-class Shape {
-  x: number,
-  y: number,
-  dx: number,
-  dy: number,
-  radius: number,
-  color: string,
+interface Shape {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  size: number;
+  color: string;
 }
