@@ -36,5 +36,10 @@ class ObjectPool {
       this.availableObjects.push(object);
     }
   }
+
+  removeAll() {
+    this.objects = []
+    this.availableObjects = []
+  }
 }
 

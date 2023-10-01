@@ -37,7 +37,9 @@ class Octagon {
     clone(mouse) {
         if (mouse.x && mouse.y) {
             if (mouse.x > this.x - this.size && mouse.x < this.x + this.size && mouse.y > this.y - this.size && mouse.y < this.y + this.size) {
-                const clone = new Octagon(this.x, this.y, -this.dx, -this.dy, this.size, this.color);
+                const clone = new Octagon(this.x, this.y, this.dx, this.dy, this.size, this.color);
+                clone.dx = -clone.dx;
+                clone.dy = -clone.dy;
                 return clone;
             }
         }

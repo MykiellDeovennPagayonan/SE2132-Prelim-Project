@@ -5,7 +5,6 @@ interface Mouse {
 }
 
 class Square implements Shape {
-class Square implements Shape {
   x: number;
   y: number;
   dx: number;
@@ -27,9 +26,6 @@ class Square implements Shape {
     this.dy = dy;
     this.size = size;
     this.color = color;
-  }
-  clone(): Square {
-    return new Square(this.x, this.y, this.dx, this.dy, this.size, this.color);
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -65,7 +61,11 @@ class Square implements Shape {
   clone(mouse: Mouse) {
     if (mouse.x && mouse.y) {
       if (mouse.x > this.x && mouse.x < this.x + this.size*2 && mouse.y > this.y && mouse.y < this.y + this.size*2) {
-        const clone = new Square(this.x, this.y, -this.dx, -this.dy, this.size, this.color)
+        const clone = new Square(this.x, this.y, this.dx, this.dy, this.size, this.color)
+        
+        clone.dx = -clone.dx
+        clone.dy = -clone.dy
+
         return clone
       }
     }

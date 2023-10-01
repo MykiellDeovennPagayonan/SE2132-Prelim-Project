@@ -15,7 +15,7 @@ class ObjectPool {
     }
     getObject() {
         if (this.availableObjects.length > 0) {
-            return this.availableObjects.pop() || null;
+            return this.availableObjects.pop();
         }
         else {
             return null;
@@ -29,5 +29,9 @@ class ObjectPool {
             }
             this.availableObjects.push(object);
         }
+    }
+    removeAll() {
+        this.objects = [];
+        this.availableObjects = [];
     }
 }

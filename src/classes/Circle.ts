@@ -58,7 +58,11 @@ class Circle implements Shape {
   clone(mouse: Mouse) {
     if (mouse.x && mouse.y) {
       if (mouse.x > this.x - this.size && mouse.x < this.x + this.size && mouse.y > this.y - this.size && mouse.y < this.y + this.size) {
-        const clone = new Circle(this.x, this.y, -this.dx, -this.dy, this.size, this.color)
+        const clone = new Circle(this.x, this.y, this.dx, this.dy, this.size, this.color)
+
+        clone.dx = -clone.dx
+        clone.dy = -clone.dy
+
         return clone
       }
     }

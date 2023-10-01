@@ -34,6 +34,7 @@ window.addEventListener("keyup", function(event) {
 });
 
 const addShapeButton = document.querySelector("#addShapeButton");
+const removeAllButton = document.querySelector("#RemoveAllButton");
 
 const circlePool = new ObjectPool(20)
 const squarePool = new ObjectPool(20)
@@ -42,6 +43,14 @@ const octagonPool = new ObjectPool(20)
 
 if (addShapeButton) {
   addShapeButton.addEventListener("mousedown", addShape);
+}
+
+if (removeAllButton) {
+  removeAllButton.addEventListener("mousedown", function() {
+    circlePool.removeAll()
+    squarePool.removeAll()
+    octagonPool.removeAll()
+  });
 }
 
 function addShape() {

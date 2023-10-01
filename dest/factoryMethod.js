@@ -9,15 +9,12 @@ function ShapeFactory(circleObjectPool, squareObjectPool, octagonObjectPool, wid
     let lengths = [circleObjectPool.objects.length, squareObjectPool.objects.length, octagonObjectPool.objects.length];
     let minLength = Math.min(...lengths);
     if (circleObjectPool.objects.length === minLength) {
-        console.log("1");
         return createCircle(x, y, dx, dy, size, color);
     }
     if (squareObjectPool.objects.length === minLength) {
-        console.log("2");
         return createSquare(x, y, dx, dy, size, color);
     }
     else {
-        console.log("3");
         return createOctagon(x, y, dx, dy, size, color);
     }
     function createCircle(x, y, dx, dy, size, color) {
