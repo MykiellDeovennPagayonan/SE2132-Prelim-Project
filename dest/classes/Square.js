@@ -8,12 +8,14 @@ class Square {
         this.size = size;
         this.color = color;
     }
+    clone() {
+        return new Square(this.x, this.y, this.dx, this.dy, this.size, this.color);
+    }
     draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.size * 2, this.size * 2);
         ctx.stroke();
-        ctx.fill();
     }
     update(ctx, canvas) {
         if (this.x > (canvas.width - (this.size * 2)) || this.x < 0) {

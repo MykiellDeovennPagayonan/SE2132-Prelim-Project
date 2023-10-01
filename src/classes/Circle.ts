@@ -31,6 +31,7 @@ class Circle implements Shape {
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.strokeStyle = this.color;
     ctx.fillStyle = this.color;
     ctx.stroke();
