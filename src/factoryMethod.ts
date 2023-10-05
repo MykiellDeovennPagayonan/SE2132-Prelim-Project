@@ -1,4 +1,4 @@
-function ShapeFactory(circleObjectPool: ObjectPool, squareObjectPool: ObjectPool, octagonObjectPool: ObjectPool, width : number, height: number) : Square | Octagon | Circle {
+function ShapeFactory(circleObjectPool: ObjectPool, squareObjectPool: ObjectPool, octagonObjectPool: ObjectPool, rectangleObjectPool: ObjectPool, width : number, height: number) : Square | Octagon | Circle {
   let size = 30;
   let x = Math.random() * (width - size * 2) + size;
   let y = Math.random() * (height - size * 2) + size;
@@ -6,15 +6,18 @@ function ShapeFactory(circleObjectPool: ObjectPool, squareObjectPool: ObjectPool
   let dy = Math.random() * 4 - 2;
   let color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
 
-  let lengths = [circleObjectPool.objects.length, squareObjectPool.objects.length, octagonObjectPool.objects.length]
+  let lengths = [circleObjectPool.objects.length, squareObjectPool.objects.length, octagonObjectPool.objects.length, rectangleObjectPool.objects.length]
   let minLength = Math.min(...lengths)
 
   if (circleObjectPool.objects.length === minLength) {
     return createCircle(x, y, dx, dy, size, color)
-  } if (squareObjectPool.objects.length === minLength) {
+  } else if (squareObjectPool.objects.length === minLength) {
     return createSquare(x, y, dx, dy, size, color)
-  } else {
+  } else if (octagonObjectPool.objects.length === minLength) {
     return createOctagon(x, y, dx, dy, size, color)
+  } else {
+    console.log("adding rectangle")
+    return createRectangle(x, y, dx, dy, size, color)
   }
 
   function createCircle(
@@ -48,5 +51,16 @@ function ShapeFactory(circleObjectPool: ObjectPool, squareObjectPool: ObjectPool
     color: string
   ) {
     return new Square(x, y, dx, dy, size, color);
+  }
+
+  function createRectangle(
+    x: number,
+    y: number,
+    dx: number,
+    dy: number,
+    size: number,
+    color: string
+  ) {
+    return new Rectangle(x, y, dx, dy, size, color);
   }
 }

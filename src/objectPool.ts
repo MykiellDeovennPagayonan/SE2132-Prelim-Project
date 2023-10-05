@@ -25,7 +25,7 @@ class ObjectPool {
     }
   }
 
-  returnObject(object: Square | Octagon | Circle) {
+  returnObject(object: Square | Octagon | Circle | Rectangle) {
     if (this.objects.includes(object)) {
       const index = this.objects.indexOf(object);
   

@@ -31,6 +31,7 @@ const removeAllButton = document.querySelector("#RemoveAllButton");
 const circlePool = new ObjectPool(20);
 const squarePool = new ObjectPool(20);
 const octagonPool = new ObjectPool(20);
+const rectanglePool = new ObjectPool(20);
 if (addShapeButton) {
     addShapeButton.addEventListener("mousedown", addShape);
 }
@@ -43,7 +44,7 @@ if (removeAllButton) {
 }
 function addShape() {
     console.log("hi");
-    let shape = ShapeFactory(circlePool, squarePool, octagonPool, window.innerWidth, window.innerHeight);
+    let shape = ShapeFactory(circlePool, squarePool, octagonPool, rectanglePool, window.innerWidth, window.innerHeight);
     if (shape instanceof Circle) {
         circlePool.addObject(shape);
     }
@@ -52,6 +53,9 @@ function addShape() {
     }
     if (shape instanceof Octagon) {
         octagonPool.addObject(shape);
+    }
+    if (shape instanceof Rectangle) {
+        rectanglePool.addObject(shape);
     }
 }
 if (canvas) {
@@ -108,6 +112,27 @@ if (canvas) {
                         if (spacebarDown && mouse.x > octagonPool.objects[i].x - octagonPool.objects[i].size && mouse.x < octagonPool.objects[i].x + octagonPool.objects[i].size && mouse.y > octagonPool.objects[i].y - octagonPool.objects[i].size && mouse.y < octagonPool.objects[i].y + octagonPool.objects[i].size) {
                             spacebarDown = false;
                             octagonPool.returnObject(octagonPool.objects[i]);
+                        }
+                    }
+                }
+                console.log(rectanglePool);
+                for (let i = 0; i < rectanglePool.objects.length; i++) {
+                    rectanglePool.objects[i].update(ctx, canvas);
+                    if (mouse.click) {
+                        const clone = rectanglePool.objects[i].clone(mouse);
+                        if (clone) {
+                            mouse.click = false;
+                            rectanglePool.addObject(clone);
+                        }
+                    }
+                    if (mouse.x && mouse.y) {
+                        if (spacebarDown &&
+                            mouse.x > rectanglePool.objects[i].x - rectanglePool.objects[i].size &&
+                            mouse.x < rectanglePool.objects[i].x + rectanglePool.objects[i].size &&
+                            mouse.y > rectanglePool.objects[i].y - rectanglePool.objects[i].size &&
+                            mouse.y < rectanglePool.objects[i].y + rectanglePool.objects[i].size * 2) {
+                            spacebarDown = false;
+                            rectanglePool.returnObject(rectanglePool.objects[i]);
                         }
                     }
                 }
